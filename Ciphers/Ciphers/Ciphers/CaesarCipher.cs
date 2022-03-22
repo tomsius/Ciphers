@@ -8,26 +8,26 @@ namespace Ciphers.Caesar
     {
         private const int LETTER_COUNT = 'z' - 'a' + 1;
 
-        private readonly int key;
+        private readonly int _key;
 
         public CaesarCipher(int key)
         {
-            this.key = key % 26;
+            _key = key % 26;
         }
 
         public string Encrypt(string plainText)
         {
-            StringBuilder sb = new StringBuilder(plainText);
+            StringBuilder cipherText = new StringBuilder(plainText);
 
-            for (int i = 0; i < sb.Length; i++)
+            for (int i = 0; i < cipherText.Length; i++)
             {
-                if (char.IsLetter(sb[i]))
+                if (char.IsLetter(cipherText[i]))
                 {
-                    sb[i] = EncryptLetter(sb[i]);
+                    cipherText[i] = EncryptLetter(cipherText[i]);
                 }
             }
 
-            return sb.ToString();
+            return cipherText.ToString();
         }
 
         private char EncryptLetter(char letter)
@@ -42,7 +42,7 @@ namespace Ciphers.Caesar
 
         private int E(int letterId)
         {
-            int encryptedLetterId = (letterId + key) % LETTER_COUNT;
+            int encryptedLetterId = (letterId + _key) % LETTER_COUNT;
             encryptedLetterId = encryptedLetterId >= 0 ? encryptedLetterId : encryptedLetterId + 26;
 
             return encryptedLetterId;
@@ -50,17 +50,17 @@ namespace Ciphers.Caesar
 
         public string Decrypt(string cipherText)
         {
-            StringBuilder sb = new StringBuilder(cipherText);
+            StringBuilder plainText = new StringBuilder(cipherText);
 
-            for (int i = 0; i < sb.Length; i++)
+            for (int i = 0; i < plainText.Length; i++)
             {
-                if (char.IsLetter(sb[i]))
+                if (char.IsLetter(plainText[i]))
                 {
-                    sb[i] = DecryptLetter(sb[i]);
+                    plainText[i] = DecryptLetter(plainText[i]);
                 }
             }
 
-            return sb.ToString();
+            return plainText.ToString();
         }
 
         private char DecryptLetter(char letter)
@@ -75,7 +75,7 @@ namespace Ciphers.Caesar
 
         private int D(int letterId)
         {
-            int decryptedLetterId = (letterId - key) % LETTER_COUNT;
+            int decryptedLetterId = (letterId - _key) % LETTER_COUNT;
             decryptedLetterId = decryptedLetterId >= 0 ? decryptedLetterId : decryptedLetterId + 26;
 
             return decryptedLetterId;
