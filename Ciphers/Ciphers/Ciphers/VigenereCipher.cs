@@ -1,5 +1,6 @@
 ﻿using Ciphers.Interfaces;
 using Ciphers.Utility;
+using System;
 using System.Text;
 
 namespace Ciphers.Ciphers
@@ -17,7 +18,6 @@ namespace Ciphers.Ciphers
 
         public string Encrypt(string plainText)
         {
-            string generatedKey = GenerateKey(plainText.Length);
             StringBuilder cipherText = new StringBuilder(plainText.Length);
 
             for (int i = 0; i < plainText.Length; i++)
@@ -25,7 +25,8 @@ namespace Ciphers.Ciphers
                 char encryptedLetter = plainText[i];
                 if (char.IsLetter(plainText[i]))
                 {
-                    encryptedLetter = EncryptLetter(plainText[i], generatedKey[i]);
+                    char keyLetter = GetKeyLetterByIndex(i);
+                    encryptedLetter = EncryptLetter(plainText[i], keyLetter);
                     
                 }
 
@@ -35,18 +36,11 @@ namespace Ciphers.Ciphers
             return cipherText.ToString();
         }
 
-        private string GenerateKey(int neededKeyLength)
+        private char GetKeyLetterByIndex(int positionInPlaintext)
         {
-            int keyIndex = 0;
-            StringBuilder generatedKey = new StringBuilder();
+            int positionInKey = positionInPlaintext % _key.Length;
 
-            while (generatedKey.Length < neededKeyLength)
-            {
-                generatedKey.Append(_key[keyIndex]);
-                keyIndex = (keyIndex + 1) % _key.Length;
-            }
-
-            return generatedKey.ToString();
+            return _key[positionInKey];
         }
 
         private char EncryptLetter(char plainTextLetter, char keyLetter)
@@ -69,7 +63,6 @@ namespace Ciphers.Ciphers
 
         public string Decrypt(string cipherText)
         {
-            string generatedKey = GenerateKey(cipherText.Length);
             StringBuilder plainText = new StringBuilder(cipherText.Length);
 
             for (int i = 0; i < cipherText.Length; i++)
@@ -77,7 +70,8 @@ namespace Ciphers.Ciphers
                 char decryptedLetter = cipherText[i];
                 if (char.IsLetter(cipherText[i]))
                 {
-                    decryptedLetter = DecryptLetter(cipherText[i], generatedKey[i]);
+                    char keyLetter = GetKeyLetterByIndex(i);
+                    decryptedLetter = DecryptLetter(cipherText[i], keyLetter);
                 }
                 
                 plainText.Append(decryptedLetter);
