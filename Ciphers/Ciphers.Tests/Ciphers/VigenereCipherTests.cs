@@ -13,6 +13,7 @@ namespace Ciphers.Tests.Ciphers
         [DataRow("CAKE", "XYZXYZ", "ZYJBAZ")]
         [DataRow("CAKE", "xyzxyz", "zyjbaz")]
         [DataRow("CAKE", "a1234c", "c1234c")]
+        [DataRow("CAKE", "ABcABc", "CBmEDc")]
         [DataTestMethod]
         public void Encrypt_ReturnEncryptedMessage_WhenPlainTextIsGiven(string key, string plainText, string expectedEncryption)
         {
@@ -28,6 +29,7 @@ namespace Ciphers.Tests.Ciphers
         [DataRow("CAKE", "ZYJBAZ", "XYZXYZ")]
         [DataRow("CAKE", "zyjbaz", "xyzxyz")]
         [DataRow("CAKE", "C1234C", "A1234C")]
+        [DataRow("CAKE", "CBmEDc", "ABcABc")]
         [DataTestMethod]
         public void Decrypt_ReturnDecryptedMessage_WhenCipherTextIsGiven(string key, string cipherText, string expectedDecryption)
         {
