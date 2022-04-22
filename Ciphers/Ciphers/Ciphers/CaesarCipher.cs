@@ -2,7 +2,7 @@
 using Ciphers.Interfaces;
 using Ciphers.Utility;
 
-namespace Ciphers.Caesar
+namespace Ciphers.Ciphers
 {
     public class CaesarCipher : ISymmetricCipher
     {
