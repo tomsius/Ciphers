@@ -84,13 +84,6 @@ namespace Ciphers.Ciphers
         private int[,] GetAdjoint(int[,] matrix)
         {
             int[,] adjoint = new int[matrix.GetLength(0), matrix.GetLength(1)];
-
-            if (matrix.GetLength(0) == 1)
-            {
-                adjoint[0, 0] = 1;
-                return adjoint;
-            }
-
             int[,] temp = new int[matrix.GetLength(0), matrix.GetLength(1)];
 
             for (int i = 0; i < matrix.GetLength(0); i++)
