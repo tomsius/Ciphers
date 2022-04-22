@@ -10,46 +10,102 @@ namespace Ciphers.Ciphers
     {
         private const int ROW_SIZE = 5;
         private const int COL_SIZE = 5;
-        private HashSet<char> _uniqueLetters;
-        private readonly string _key;
+        private readonly char[,] _keyMatrix;
 
-        // TODO - iskelti keyMatrix i atskira metoda ir generuoti tik viena karta
         public PlayfairCipher(string key)
         {
-            _key = key.ToUpper();
-            _uniqueLetters = new HashSet<char>(ROW_SIZE * COL_SIZE);
+            _keyMatrix = GenerateKeyMatrix(key.ToUpper());
+        }
+
+        private char[,] GenerateKeyMatrix(string key)
+        {
+            HashSet<char> uniqueLetters = new HashSet<char>(ROW_SIZE * COL_SIZE);
+            char[,] partialKeyMatrix = FillMatrixWithKey(key, uniqueLetters);
+            char[,] fullKeyMatrix = CompleteKeyMatrix(partialKeyMatrix, uniqueLetters);
+
+            return fullKeyMatrix;
+        }
+
+        private char[,] FillMatrixWithKey(string key, HashSet<char> uniqueLetters)
+        {
+            char[,] matrix = new char[ROW_SIZE, COL_SIZE];
+            int row = 0;
+            int col = 0;
+
+            for (int i = 0; i < key.Length; i++)
+            {
+                char letter = PlayfairHelper.GetAvailableLetter(key[i]);
+
+                if (uniqueLetters.Add(letter))
+                {
+                    matrix[row, col] = letter;
+                    col = (col + 1) % COL_SIZE;
+
+                    if (col == 0)
+                    {
+                        row++;
+                    }
+                }
+            }
+
+            return matrix;
+        }
+
+        private char[,] CompleteKeyMatrix(char[,] partialKeyMatrix, HashSet<char> uniqueLetters)
+        {
+            char[,] matrix = new char[ROW_SIZE, COL_SIZE];
+            Array.Copy(partialKeyMatrix, matrix, ROW_SIZE * COL_SIZE);
+            int row = uniqueLetters.Count / COL_SIZE;
+            int col = uniqueLetters.Count % COL_SIZE;
+
+            for (char c = 'A'; c <= 'Z'; c++)
+            {
+                char letter = PlayfairHelper.GetAvailableLetter(c);
+
+                if (uniqueLetters.Add(letter))
+                {
+                    matrix[row, col] = letter;
+                    col = (col + 1) % COL_SIZE;
+
+                    if (col == 0)
+                    {
+                        row++;
+                    }
+                }
+            }
+
+            return matrix;
         }
 
         public string Encrypt(string plainText)
         {
-            char[,] keyMatrix = GenerateKeyMatrix();
             List<string> digraphs = GetDigraphs(plainText.ToUpper());
             StringBuilder cipherText = new StringBuilder();
 
             foreach (var digraph in digraphs)
             {
                 char firstLetter = digraph[0];
-                (int row, int col) firstPos = PlayfairHelper.GetPositionOfLetter(keyMatrix, firstLetter);
+                (int row, int col) firstPos = PlayfairHelper.GetPositionOfLetter(_keyMatrix, firstLetter);
 
                 char secondLetter = digraph[1];
-                (int row, int col) secondPos = PlayfairHelper.GetPositionOfLetter(keyMatrix, secondLetter);
+                (int row, int col) secondPos = PlayfairHelper.GetPositionOfLetter(_keyMatrix, secondLetter);
 
                 char firstEncryptedLetter;
                 char secondEncryptedLetter;
 
                 if (firstPos.col == secondPos.col)
                 {
-                    firstEncryptedLetter = EncryptLetterInColumn(keyMatrix, firstPos);
-                    secondEncryptedLetter = EncryptLetterInColumn(keyMatrix, secondPos);
+                    firstEncryptedLetter = EncryptLetterInColumn(_keyMatrix, firstPos);
+                    secondEncryptedLetter = EncryptLetterInColumn(_keyMatrix, secondPos);
                 }
                 else if (firstPos.row == secondPos.row)
                 {
-                    firstEncryptedLetter = EncryptLetterInRow(keyMatrix, firstPos);
-                    secondEncryptedLetter = EncryptLetterInRow(keyMatrix, secondPos);
+                    firstEncryptedLetter = EncryptLetterInRow(_keyMatrix, firstPos);
+                    secondEncryptedLetter = EncryptLetterInRow(_keyMatrix, secondPos);
                 }
                 else
                 {
-                    char[] encryptedLetters = GetHorizontallyOppositeLetters(keyMatrix, firstPos, secondPos);
+                    char[] encryptedLetters = GetHorizontallyOppositeLetters(_keyMatrix, firstPos, secondPos);
 
                     firstEncryptedLetter = encryptedLetters[0];
                     secondEncryptedLetter = encryptedLetters[1];
@@ -60,65 +116,6 @@ namespace Ciphers.Ciphers
             }
 
             return cipherText.ToString();
-        }
-
-        private char[,] GenerateKeyMatrix()
-        {
-            char[,] partialKeyMatrix = FillMatrixWithKey();
-            char[,] fullKeyMatrix = CompleteKeyMatrix(partialKeyMatrix);
-
-            return fullKeyMatrix;
-        }
-
-        private char[,] FillMatrixWithKey()
-        {
-            char[,] matrix = new char[ROW_SIZE, COL_SIZE];
-            int row = 0;
-            int col = 0;
-
-            for (int i = 0; i < _key.Length; i++)
-            {
-                char letter = PlayfairHelper.GetAvailableLetter(_key[i]);
-
-                if (_uniqueLetters.Add(letter))
-                {
-                    matrix[row, col] = letter;
-                    col = (col + 1) % COL_SIZE;
-
-                    if (col == 0)
-                    {
-                        row++;
-                    }
-                }
-            }
-
-            return matrix;
-        }
-
-        private char[,] CompleteKeyMatrix(char[,] partialKeyMatrix)
-        {
-            char[,] matrix = new char[ROW_SIZE, COL_SIZE];
-            Array.Copy(partialKeyMatrix, matrix, ROW_SIZE * COL_SIZE);
-            int row = _uniqueLetters.Count / COL_SIZE;
-            int col = _uniqueLetters.Count % COL_SIZE;
-
-            for (char c = 'A'; c <= 'Z'; c++)
-            {
-                char letter = PlayfairHelper.GetAvailableLetter(c);
-
-                if (_uniqueLetters.Add(letter))
-                {
-                    matrix[row, col] = letter;
-                    col = (col + 1) % COL_SIZE;
-
-                    if (col == 0)
-                    {
-                        row++;
-                    }
-                }
-            }
-
-            return matrix;
         }
 
         private List<string> GetDigraphs(string plainText)
@@ -181,34 +178,33 @@ namespace Ciphers.Ciphers
 
         public string Decrypt(string cipherText)
         {
-            char[,] keyMatrix = GenerateKeyMatrix();
             List<string> digraphs = GetDigraphs(cipherText.ToUpper());
             StringBuilder plainText = new StringBuilder();
 
             foreach (var digraph in digraphs)
             {
                 char firstLetter = digraph[0];
-                (int row, int col) firstPos = PlayfairHelper.GetPositionOfLetter(keyMatrix, firstLetter);
+                (int row, int col) firstPos = PlayfairHelper.GetPositionOfLetter(_keyMatrix, firstLetter);
 
                 char secondLetter = digraph[1];
-                (int row, int col) secondPos = PlayfairHelper.GetPositionOfLetter(keyMatrix, secondLetter);
+                (int row, int col) secondPos = PlayfairHelper.GetPositionOfLetter(_keyMatrix, secondLetter);
 
                 char firstDecryptedLetter;
                 char secondDecryptedLetter;
 
                 if (firstPos.col == secondPos.col)
                 {
-                    firstDecryptedLetter = DecryptLetterInColumn(keyMatrix, firstPos);
-                    secondDecryptedLetter = DecryptLetterInColumn(keyMatrix, secondPos);
+                    firstDecryptedLetter = DecryptLetterInColumn(_keyMatrix, firstPos);
+                    secondDecryptedLetter = DecryptLetterInColumn(_keyMatrix, secondPos);
                 }
                 else if (firstPos.row == secondPos.row)
                 {
-                    firstDecryptedLetter = DecryptLetterInRow(keyMatrix, firstPos);
-                    secondDecryptedLetter = DecryptLetterInRow(keyMatrix, secondPos);
+                    firstDecryptedLetter = DecryptLetterInRow(_keyMatrix, firstPos);
+                    secondDecryptedLetter = DecryptLetterInRow(_keyMatrix, secondPos);
                 }
                 else
                 {
-                    char[] encryptedLetters = GetHorizontallyOppositeLetters(keyMatrix, firstPos, secondPos);
+                    char[] encryptedLetters = GetHorizontallyOppositeLetters(_keyMatrix, firstPos, secondPos);
 
                     firstDecryptedLetter = encryptedLetters[0];
                     secondDecryptedLetter = encryptedLetters[1];
