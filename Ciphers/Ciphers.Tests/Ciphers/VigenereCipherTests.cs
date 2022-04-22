@@ -1,6 +1,4 @@
-﻿using Ciphers.Caesar;
-using Ciphers.Ciphers;
-using Ciphers.Utility;
+﻿using Ciphers.Ciphers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Ciphers.Tests.Ciphers
