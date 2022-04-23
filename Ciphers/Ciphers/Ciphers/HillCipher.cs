@@ -26,6 +26,21 @@ namespace Ciphers.Ciphers
             _decryptionKeyMatrix = GenerateDecryptionKeyMatrix();
         }
 
+        private int[,] GenerateEncryptionKeyMatrix(int n)
+        {
+            int[,] keyMatrix = new int[n, n];
+
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    keyMatrix[i, j] = _random.Next('z' - 'a' + 1);
+                }
+            }
+
+            return keyMatrix;
+        }
+
         private int[,] GenerateDecryptionKeyMatrix()
         {
             int determinant = GetDeterminant(_encryptionKeyMatrix, _encryptionKeyMatrix.GetLength(0));
@@ -149,25 +164,9 @@ namespace Ciphers.Ciphers
             return result;
         }
 
-        private int[,] GenerateEncryptionKeyMatrix(int n)
-        {
-            int[,] keyMatrix = new int[n, n];
-
-            for (int i = 0; i < n; i++)
-            {
-                for (int j = 0; j < n; j++)
-                {
-                    keyMatrix[i, j] = _random.Next('z' - 'a' + 1);
-                }
-            }
-
-            return keyMatrix;
-        }
-
         public string Encrypt(string plainText)
         {
-            string normalizedPlainText = TextHelper.NormalizeText(plainText.ToUpper());
-            int[,] plainTextVector = HillHelper.ConvertTextToVector(normalizedPlainText, _encryptionKeyMatrix.GetLength(0));
+            int[,] plainTextVector = HillHelper.ConvertTextToVector(plainText, _encryptionKeyMatrix.GetLength(0));
             int[,] cipherMatrix = GenerateOutputMatrix(plainTextVector, _encryptionKeyMatrix);
             string cipherText = HillHelper.ConvertVectorToText(cipherMatrix);
 
@@ -198,8 +197,7 @@ namespace Ciphers.Ciphers
 
         public string Decrypt(string cipherText)
         {
-            string normalizedCipherText = TextHelper.NormalizeText(cipherText.ToUpper());
-            int[,] cipherTextVector = HillHelper.ConvertTextToVector(normalizedCipherText, _decryptionKeyMatrix.GetLength(0));
+            int[,] cipherTextVector = HillHelper.ConvertTextToVector(cipherText, _decryptionKeyMatrix.GetLength(0));
             int[,] plainTextMatrix = GenerateOutputMatrix(cipherTextVector, _decryptionKeyMatrix);
             string plainText = HillHelper.ConvertVectorToText(plainTextMatrix);
 
