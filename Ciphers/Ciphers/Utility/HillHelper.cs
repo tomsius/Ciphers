@@ -8,12 +8,13 @@ namespace Ciphers.Utility
     {
         public static int[,] ConvertTextToVector(string text, int neededLength)
         {
+            string normalizedText = TextHelper.NormalizeText(text);
             int[,] vector = new int[neededLength, 1];
             int i = 0;
 
-            while (i < text.Length && i < neededLength)
+            while (i < normalizedText.Length && i < neededLength)
             {
-                vector[i, 0] = EncodeLetter(text[i]);
+                vector[i, 0] = EncodeLetter(normalizedText[i]);
                 i++;
             }
 
