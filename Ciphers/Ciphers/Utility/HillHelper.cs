@@ -38,7 +38,7 @@ namespace Ciphers.Utility
             }
         }
 
-        internal static string ConvertVectorToText(int[,] matrix)
+        public static string ConvertVectorToText(int[,] matrix)
         {
             StringBuilder text = new StringBuilder(matrix.GetLength(0));
 
