@@ -14,7 +14,7 @@ namespace Ciphers.Utility
 
         public int Next(int max)
 {
-            return _random.Next('z' - 'a' + 1);
+            return _random.Next(max);
         }
     }
 }
