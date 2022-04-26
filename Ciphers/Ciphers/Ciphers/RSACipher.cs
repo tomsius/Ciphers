@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Ciphers.Ciphers
 {
-    public class RSACipher : IAsymmetricCipher
+    public class RSACipher : IAsymmetricCipher, ISignature
     {
         public Key PublicKey { get; private set; }
         private Key _privateKey;
@@ -121,6 +121,21 @@ namespace Ciphers.Ciphers
             BigInteger result = BigInteger.ModPow(bigValue, exponent, modulus);
 
             return (int)result;
+        }
+
+        public string Sign(string input)
+        {
+            string hashValue = HashCalculator.CalculateHash(input);
+
+            return Decrypt(hashValue);
+        }
+
+        public bool IsSignatureValid(string input, string signature, Key publicKey)
+        {
+            string hashValue = HashCalculator.CalculateHash(input);
+            string signatureHashValue = Encrypt(signature, publicKey);
+
+            return hashValue.Equals(signatureHashValue);
         }
     }
 }
