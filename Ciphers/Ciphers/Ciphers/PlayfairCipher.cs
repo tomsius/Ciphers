@@ -8,8 +8,8 @@ namespace Ciphers.Ciphers
 {
     public class PlayfairCipher : ISymmetricCipher
     {
-        private const int ROW_SIZE = 5;
-        private const int COL_SIZE = 5;
+        private const int RowSize = 5;
+        private const int ColSize = 5;
         private readonly char[,] _keyMatrix;
 
         public PlayfairCipher(string key)
@@ -19,7 +19,7 @@ namespace Ciphers.Ciphers
 
         private char[,] GenerateKeyMatrix(string key)
         {
-            HashSet<char> uniqueLetters = new HashSet<char>(ROW_SIZE * COL_SIZE);
+            HashSet<char> uniqueLetters = new HashSet<char>(RowSize * ColSize);
             char[,] partialKeyMatrix = FillMatrixWithKey(key, uniqueLetters);
             char[,] fullKeyMatrix = CompleteKeyMatrix(partialKeyMatrix, uniqueLetters);
 
@@ -28,7 +28,7 @@ namespace Ciphers.Ciphers
 
         private char[,] FillMatrixWithKey(string key, HashSet<char> uniqueLetters)
         {
-            char[,] matrix = new char[ROW_SIZE, COL_SIZE];
+            char[,] matrix = new char[RowSize, ColSize];
             int row = 0;
             int col = 0;
 
@@ -39,7 +39,7 @@ namespace Ciphers.Ciphers
                 if (uniqueLetters.Add(letter))
                 {
                     matrix[row, col] = letter;
-                    col = (col + 1) % COL_SIZE;
+                    col = (col + 1) % ColSize;
 
                     if (col == 0)
                     {
@@ -53,10 +53,10 @@ namespace Ciphers.Ciphers
 
         private char[,] CompleteKeyMatrix(char[,] partialKeyMatrix, HashSet<char> uniqueLetters)
         {
-            char[,] matrix = new char[ROW_SIZE, COL_SIZE];
-            Array.Copy(partialKeyMatrix, matrix, ROW_SIZE * COL_SIZE);
-            int row = uniqueLetters.Count / COL_SIZE;
-            int col = uniqueLetters.Count % COL_SIZE;
+            char[,] matrix = new char[RowSize, ColSize];
+            Array.Copy(partialKeyMatrix, matrix, RowSize * ColSize);
+            int row = uniqueLetters.Count / ColSize;
+            int col = uniqueLetters.Count % ColSize;
 
             for (char c = 'A'; c <= 'Z'; c++)
             {
@@ -65,7 +65,7 @@ namespace Ciphers.Ciphers
                 if (uniqueLetters.Add(letter))
                 {
                     matrix[row, col] = letter;
-                    col = (col + 1) % COL_SIZE;
+                    col = (col + 1) % ColSize;
 
                     if (col == 0)
                     {
@@ -154,14 +154,14 @@ namespace Ciphers.Ciphers
 
         private char EncryptLetterInRow(char[,] keyMatrix, (int row, int col) pos)
         {
-            int newCol = (pos.col + 1) % COL_SIZE;
+            int newCol = (pos.col + 1) % ColSize;
 
             return keyMatrix[pos.row, newCol];
         }
 
         private char EncryptLetterInColumn(char[,] keyMatrix, (int row, int col) pos)
         {
-            int newRow = (pos.row + 1) % ROW_SIZE;
+            int newRow = (pos.row + 1) % RowSize;
 
             return keyMatrix[newRow, pos.col];
         }
@@ -223,7 +223,7 @@ namespace Ciphers.Ciphers
 
             if (newCol < 0)
             {
-                newCol += COL_SIZE;
+                newCol += ColSize;
             }
 
             return keyMatrix[pos.row, newCol];
@@ -235,7 +235,7 @@ namespace Ciphers.Ciphers
 
             if (newRow < 0)
             {
-                newRow += ROW_SIZE;
+                newRow += RowSize;
             }
 
             return keyMatrix[newRow, pos.col];

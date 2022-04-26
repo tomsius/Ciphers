@@ -7,7 +7,7 @@ namespace Ciphers.Ciphers
 {
     public class VigenereCipher : ISymmetricCipher
     {
-        private const int LETTER_COUNT = 'z' - 'a' + 1;
+        private const int LetterCount = 'z' - 'a' + 1;
 
         private readonly string _key;
 
@@ -56,7 +56,7 @@ namespace Ciphers.Ciphers
 
         private int E(int letterId, int keyId)
         {
-            int encryptedLetterId = (letterId + keyId) % LETTER_COUNT;
+            int encryptedLetterId = (letterId + keyId) % LetterCount;
 
             return encryptedLetterId;
         }
@@ -93,7 +93,7 @@ namespace Ciphers.Ciphers
 
         private int D(int letterId, int keyId)
         {
-            int decryptedLetterId = (letterId - keyId + LETTER_COUNT) % LETTER_COUNT;
+            int decryptedLetterId = (letterId - keyId + LetterCount) % LetterCount;
 
             return decryptedLetterId;
         }

@@ -6,7 +6,7 @@ namespace Ciphers.Ciphers
 {
     public class HillCipher : ISymmetricCipher
     {
-        private const int LETTER_COUNT = 'z' - 'a' + 1;
+        private const int LetterCount = 'z' - 'a' + 1;
         private readonly IRandomHelper _random;
         private readonly int[,] _encryptionKeyMatrix;
         private readonly int[,] _decryptionKeyMatrix;
@@ -134,7 +134,7 @@ namespace Ciphers.Ciphers
         private int FindFactor(int d)
         {
             int i = 1;
-            while ((i * d - 1) % LETTER_COUNT != 0)
+            while ((i * d - 1) % LetterCount != 0)
             {
                 i++;
             }
@@ -150,11 +150,11 @@ namespace Ciphers.Ciphers
             {
                 for (int j = 0; j < matrix.GetLength(1); j++)
                 {
-                    int digit = x * matrix[i, j] % LETTER_COUNT;
+                    int digit = x * matrix[i, j] % LetterCount;
 
                     if (digit < 0)
                     {
-                        digit = LETTER_COUNT + digit;
+                        digit = LetterCount + digit;
                     }
 
                     result[i, j] = digit;
@@ -188,7 +188,7 @@ namespace Ciphers.Ciphers
                         cipherMatrix[i, j] += keyMatrix[i, k] * inpuVvector[k, j];
                     }
 
-                    cipherMatrix[i, j] %= LETTER_COUNT;
+                    cipherMatrix[i, j] %= LetterCount;
                 }
             }
 

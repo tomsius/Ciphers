@@ -9,7 +9,7 @@ namespace Ciphers.Ciphers
     public class RSACipher : IAsymmetricCipher, ISignature
     {
         public Key PublicKey { get; private set; }
-        private Key _privateKey;
+        private readonly Key _privateKey;
 
         public RSACipher()
         {
