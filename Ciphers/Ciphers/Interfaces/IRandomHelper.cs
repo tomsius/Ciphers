@@ -2,6 +2,6 @@
 {
     public interface IRandomHelper
     {
-        int Next(int v);
+        public int Next(int max);
     }
 }
