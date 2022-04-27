@@ -2,7 +2,7 @@
 {
     public interface ISymmetricCipher
     {
-        string Encrypt(string plainText);
-        string Decrypt(string cipherText);
+        public string Encrypt(string plainText);
+        public string Decrypt(string cipherText);
     }
 }
