@@ -17,11 +17,11 @@ namespace Ciphers.Utility
             return availableLetter;
         }
 
-        public static string NormalizeText(string plainText)
+        public static string NormalizeText(string text)
         {
-            StringBuilder normalizedText = new StringBuilder(plainText.Length);
+            StringBuilder normalizedText = new StringBuilder(text.Length);
 
-            foreach (var character in plainText)
+            foreach (var character in text)
             {
                 if (char.IsLetter(character))
                 {
