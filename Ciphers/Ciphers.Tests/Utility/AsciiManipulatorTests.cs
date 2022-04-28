@@ -16,7 +16,7 @@ namespace Ciphers.Tests.Utility
         [DataTestMethod]
         public void NormalizeLetter_ReturnNormalizedLetterCode_WhenInputIsLetter(char givenLetter, int expectedNormalizedCode)
         {
-            int actual = AsciiManipulator.NormalizeLetter(givenLetter);
+            int actual = AsciiManipulator.GetNormalizedLetterCode(givenLetter);
 
             Assert.AreEqual(expectedNormalizedCode, actual);
         }
@@ -26,7 +26,7 @@ namespace Ciphers.Tests.Utility
         [DataTestMethod]
         public void NormalizeLetter_ThrowArgumentException_WhenArgumentIsNotLetter(char givenInput, string expectedMessage)
         {
-            var ex = Assert.ThrowsException<ArgumentException>(() => AsciiManipulator.NormalizeLetter(givenInput));
+            var ex = Assert.ThrowsException<ArgumentException>(() => AsciiManipulator.GetNormalizedLetterCode(givenInput));
 
             Assert.AreEqual(expectedMessage, ex.Message);
         }
@@ -40,7 +40,7 @@ namespace Ciphers.Tests.Utility
         [DataTestMethod]
         public void ReverseToLetter_ReturnA_WhenLetterIndexIs0AndLetterIsUpper(int givenNormalizedCode, bool isUpper, char expectedLetter)
         {
-            char actual = AsciiManipulator.ReverseToLetter(givenNormalizedCode, isUpper);
+            char actual = AsciiManipulator.GetLetterByNormalizedCode(givenNormalizedCode, isUpper);
 
             Assert.AreEqual(expectedLetter, actual);
         }

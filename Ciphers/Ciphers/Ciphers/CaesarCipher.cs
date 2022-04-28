@@ -33,9 +33,9 @@ namespace Ciphers.Ciphers
         private char EncryptLetter(char letter)
         {
             bool isLetterUpper = char.IsUpper(letter);
-            int normalizedLetterCode = AsciiManipulator.NormalizeLetter(letter);
+            int normalizedLetterCode = AsciiManipulator.GetNormalizedLetterCode(letter);
             int encryptedLetterCode = E(normalizedLetterCode);
-            char encryptedLetter = AsciiManipulator.ReverseToLetter(encryptedLetterCode, isLetterUpper);
+            char encryptedLetter = AsciiManipulator.GetLetterByNormalizedCode(encryptedLetterCode, isLetterUpper);
 
             return encryptedLetter;
         }
@@ -66,9 +66,9 @@ namespace Ciphers.Ciphers
         private char DecryptLetter(char letter)
         {
             bool isLetterUpper = char.IsUpper(letter);
-            int normalizedLetterCode = AsciiManipulator.NormalizeLetter(letter);
+            int normalizedLetterCode = AsciiManipulator.GetNormalizedLetterCode(letter);
             int decryptedLetterCode = D(normalizedLetterCode);
-            char decryptedLetter = AsciiManipulator.ReverseToLetter(decryptedLetterCode, isLetterUpper);
+            char decryptedLetter = AsciiManipulator.GetLetterByNormalizedCode(decryptedLetterCode, isLetterUpper);
 
             return decryptedLetter;
         }

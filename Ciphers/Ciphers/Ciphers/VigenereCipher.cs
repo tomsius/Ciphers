@@ -46,10 +46,10 @@ namespace Ciphers.Ciphers
         private char EncryptLetter(char plainTextLetter, char keyLetter)
         {
             bool isLetterUpper = char.IsUpper(plainTextLetter);
-            int normalizedLetterCode = AsciiManipulator.NormalizeLetter(plainTextLetter);
-            int normalizedKeyCode = AsciiManipulator.NormalizeLetter(keyLetter);
+            int normalizedLetterCode = AsciiManipulator.GetNormalizedLetterCode(plainTextLetter);
+            int normalizedKeyCode = AsciiManipulator.GetNormalizedLetterCode(keyLetter);
             int encryptedLetterCode = E(normalizedLetterCode, normalizedKeyCode);
-            char encryptedLetter = AsciiManipulator.ReverseToLetter(encryptedLetterCode, isLetterUpper);
+            char encryptedLetter = AsciiManipulator.GetLetterByNormalizedCode(encryptedLetterCode, isLetterUpper);
 
             return encryptedLetter;
         }
@@ -83,10 +83,10 @@ namespace Ciphers.Ciphers
         private char DecryptLetter(char letter, char keyLetter)
         {
             bool isLetterUpper = char.IsUpper(letter);
-            int normalizedLetterCode = AsciiManipulator.NormalizeLetter(letter);
-            int normalizedKeyCode = AsciiManipulator.NormalizeLetter(keyLetter);
+            int normalizedLetterCode = AsciiManipulator.GetNormalizedLetterCode(letter);
+            int normalizedKeyCode = AsciiManipulator.GetNormalizedLetterCode(keyLetter);
             int decryptedLetterCode = D(normalizedLetterCode, normalizedKeyCode);
-            char decryptedLetter = AsciiManipulator.ReverseToLetter(decryptedLetterCode, isLetterUpper);
+            char decryptedLetter = AsciiManipulator.GetLetterByNormalizedCode(decryptedLetterCode, isLetterUpper);
 
             return decryptedLetter;
         }

@@ -7,7 +7,7 @@ namespace Ciphers.Utility
         private const int UpperLetterAsciiStart = 'A';
         private const int LowerLetterAsciiStart = 'a';
 
-        public static int NormalizeLetter(char letter)
+        public static int GetNormalizedLetterCode(char letter)
         {
             if (!char.IsLetter(letter))
             {
@@ -32,7 +32,7 @@ namespace Ciphers.Utility
             return letter - LowerLetterAsciiStart;
         }
 
-        public static char ReverseToLetter(int letterIndex, bool isUpper)
+        public static char GetLetterByNormalizedCode(int letterIndex, bool isUpper)
         {
             if (isUpper)
             {
