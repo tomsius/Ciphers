@@ -79,15 +79,15 @@ namespace Ciphers.Ciphers
 
         public string Encrypt(string plainText)
         {
-            List<string> digraphs = GetDigraphs(plainText.ToUpper());
+            List<string> digrams = GetDigrams(plainText.ToUpper());
             StringBuilder cipherText = new StringBuilder();
 
-            foreach (var digraph in digraphs)
+            foreach (var digram in digrams)
             {
-                char firstLetter = digraph[0];
+                char firstLetter = digram[0];
                 (int row, int col) firstPos = PlayfairHelper.GetPositionOfLetter(_keyMatrix, firstLetter);
 
-                char secondLetter = digraph[1];
+                char secondLetter = digram[1];
                 (int row, int col) secondPos = PlayfairHelper.GetPositionOfLetter(_keyMatrix, secondLetter);
 
                 char firstEncryptedLetter;
@@ -118,7 +118,7 @@ namespace Ciphers.Ciphers
             return cipherText.ToString();
         }
 
-        private List<string> GetDigraphs(string plainText)
+        private List<string> GetDigrams(string plainText)
         {
             List<string> result = new List<string>();
             string normalizedText = PlayfairHelper.NormalizeText(plainText);
@@ -178,7 +178,7 @@ namespace Ciphers.Ciphers
 
         public string Decrypt(string cipherText)
         {
-            List<string> digraphs = GetDigraphs(cipherText.ToUpper());
+            List<string> digraphs = GetDigrams(cipherText.ToUpper());
             StringBuilder plainText = new StringBuilder();
 
             foreach (var digraph in digraphs)

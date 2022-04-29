@@ -1,6 +1,5 @@
 ﻿using Ciphers.Interfaces;
 using Ciphers.Utility;
-using System;
 
 namespace Ciphers.Ciphers
 {
