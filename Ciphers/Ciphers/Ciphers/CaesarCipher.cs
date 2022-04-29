@@ -43,7 +43,11 @@ namespace Ciphers.Ciphers
         private int E(int letterId)
         {
             int encryptedLetterId = (letterId + _key) % LetterCount;
-            encryptedLetterId = encryptedLetterId >= 0 ? encryptedLetterId : encryptedLetterId + 26;
+
+            if (encryptedLetterId < 0)
+            {
+                encryptedLetterId += 26;
+            }
 
             return encryptedLetterId;
         }
@@ -76,7 +80,11 @@ namespace Ciphers.Ciphers
         private int D(int letterId)
         {
             int decryptedLetterId = (letterId - _key) % LetterCount;
-            decryptedLetterId = decryptedLetterId >= 0 ? decryptedLetterId : decryptedLetterId + 26;
+
+            if (decryptedLetterId < 0)
+            {
+                decryptedLetterId += 26;
+            }
 
             return decryptedLetterId;
         }
