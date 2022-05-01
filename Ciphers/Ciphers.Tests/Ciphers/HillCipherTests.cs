@@ -27,7 +27,7 @@ namespace Ciphers.Tests.Ciphers
 
         [DataRow(3, "ACT", "POH")]
         [DataRow(3, "AC", "VWT")]
-        [DataRow(3, "ACTS", "POH")]
+        [DataRow(3, "ACtS", "POH")]
         [DataRow(3, "AC1", "VWT")]
         [DataTestMethod]
         public void Encrypt_ReturnEncryptedMessage_WhenPlainTextIsGiven(int messageMaxLength, string plainText, string expectedEncryption)
@@ -40,7 +40,7 @@ namespace Ciphers.Tests.Ciphers
         }
 
         [DataRow(3, "POH", "ACT")]
-        [DataRow(3, "VWT", "ACZ")]
+        [DataRow(3, "VwT", "ACZ")]
         [DataRow(3, "VWT1", "ACZ")]
         [DataTestMethod]
         public void Decrypt_ReturnDecryptedMessage_WhenCipherTextIsGiven(int messageMaxLength, string cipherText, string expectedDecryption)

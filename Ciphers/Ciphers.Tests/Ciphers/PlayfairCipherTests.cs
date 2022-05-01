@@ -22,12 +22,12 @@ namespace Ciphers.Tests.Ciphers
             Assert.AreEqual(expectedEncryption, actual);
         }
 
-        [DataRow("MONARCHY", "GATLMZCLRQTX", "INSTRUMENTSZ")]
-        [DataRow("monarchy", "gatlmzclrqtx", "INSTRUMENTSZ")]
-        [DataRow("MONarCHY", "GATLmzcLRQTX", "INSTRUMENTSZ")]
-        [DataRow("MONarCHY", "CFSUPM", "HELXLO")]
-        [DataRow("MONarCHY", "CFSUPMKU", "HELXLOEZ")]
-        [DataRow("japonija", "ANIPUX", "IONASZ")]
+        [DataRow("MONARCHY", "GATLMZCLRQTX", "INSTRUMENTS")]
+        [DataRow("monarchy", "gatlmzclrqtx", "INSTRUMENTS")]
+        [DataRow("MONarCHY", "GATLmzcLRQTX", "INSTRUMENTS")]
+        [DataRow("MONarCHY", "CFSUPM", "HELLO")]
+        [DataRow("MONarCHY", "CFSUPMKU", "HELLOE")]
+        [DataRow("japonija", "ANIPUX", "IONAS")]
         [DataRow("MONARCHY", "MC", "UM")]
         [DataTestMethod]
         public void Decrypt_ReturnDecryptedMessage_WhenCipherTextIsGiven(string key, string cipherText, string expectedDecryption)

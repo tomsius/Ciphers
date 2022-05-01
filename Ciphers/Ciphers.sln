@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ciphers", "Ciphers\Ciphers.csproj", "{DABA7AAB-40CE-4156-AF10-DC44C900FC5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ciphers", "Ciphers\Ciphers.csproj", "{DABA7AAB-40CE-4156-AF10-DC44C900FC5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ciphers.Tests", "Ciphers.Tests\Ciphers.Tests.csproj", "{10359FFD-D59E-4D68-B7C5-23E012C546EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ciphers.Tests", "Ciphers.Tests\Ciphers.Tests.csproj", "{10359FFD-D59E-4D68-B7C5-23E012C546EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
