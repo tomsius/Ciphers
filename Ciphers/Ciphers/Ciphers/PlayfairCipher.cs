@@ -214,7 +214,25 @@ namespace Ciphers.Ciphers
                 plainText.Append(secondDecryptedLetter);
             }
 
+            RemoveFillers(plainText);
             return plainText.ToString();
+        }
+
+        private void RemoveFillers(StringBuilder plainText)
+        {
+            if (plainText.Length % 2 == 0 && plainText[plainText.Length - 1] == 'Z')
+            {
+                plainText.Remove(plainText.Length - 1, 1);
+            }
+
+            for (int i = 1; i < plainText.Length - 1; i++)
+            {
+                if (plainText[i] == 'X' && plainText[i - 1] == plainText[i + 1])
+                {
+                    plainText.Remove(i, 1);
+                    i += 1;
+                }
+            }
         }
 
         private char DecryptLetterInRow(char[,] keyMatrix, (int row, int col) pos)
