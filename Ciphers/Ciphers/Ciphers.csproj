@@ -3,6 +3,16 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>0.6</Version>
+    <Authors>Tomas</Authors>
+    <Company> </Company>
+    <RepositoryUrl>https://github.com/tomsius/Ciphers</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>cryptology;cipher;encrypt;decrypt</PackageTags>
+    <Description>Caesar, Hill, Playfair, Vigenere and RSA (insecure) implementation.</Description>
+    <BaseOutputPath>C:\Users\User\Desktop\NuGet</BaseOutputPath>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
   </PropertyGroup>
 
 </Project>
