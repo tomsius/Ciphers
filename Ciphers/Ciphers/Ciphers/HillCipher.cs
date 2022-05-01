@@ -165,7 +165,7 @@ namespace Ciphers.Ciphers
 
         public string Encrypt(string plainText)
         {
-            int[,] plainTextVector = HillHelper.ConvertTextToVector(plainText, _encryptionKeyMatrix.GetLength(0));
+            int[,] plainTextVector = HillHelper.ConvertTextToVector(plainText.ToUpper(), _encryptionKeyMatrix.GetLength(0));
             int[,] cipherMatrix = GenerateOutputMatrix(plainTextVector, _encryptionKeyMatrix);
             string cipherText = HillHelper.ConvertVectorToText(cipherMatrix);
 
@@ -196,7 +196,7 @@ namespace Ciphers.Ciphers
 
         public string Decrypt(string cipherText)
         {
-            int[,] cipherTextVector = HillHelper.ConvertTextToVector(cipherText, _decryptionKeyMatrix.GetLength(0));
+            int[,] cipherTextVector = HillHelper.ConvertTextToVector(cipherText.ToUpper(), _decryptionKeyMatrix.GetLength(0));
             int[,] plainTextMatrix = GenerateOutputMatrix(cipherTextVector, _decryptionKeyMatrix);
             string plainText = HillHelper.ConvertVectorToText(plainTextMatrix);
 
