@@ -13,6 +13,7 @@
     <Description>Caesar, Hill, Playfair, Vigenere and RSA (insecure) implementation.</Description>
     <BaseOutputPath>C:\Users\User\Desktop\NuGet</BaseOutputPath>
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
+    <PackageId>SimpleCiphers</PackageId>
   </PropertyGroup>
 
 </Project>
